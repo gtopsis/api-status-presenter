@@ -28,7 +28,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-btn class="info" @click.stop="miniVariant = !miniVariant">
+      <v-btn class="info" @click.stop="dialog = true">
         <span>Import API spec from .yaml</span>
       </v-btn>
       <v-btn class="ml-2 success" @click.stop="miniVariant = !miniVariant">
@@ -43,16 +43,49 @@
     <v-footer :absolute="!fixed" app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
+
+    <v-dialog
+      v-model="dialog"
+      max-width="600px"
+      min-width="300px"
+      transition="dialog-top-transition"
+    >
+      <v-card>
+        <v-card-title class="headline"> Upload API specification </v-card-title>
+
+        <v-card-text>
+          <file-upload />
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn color="green darken-1" text @click="dialog = false">
+            Disagree
+          </v-btn>
+
+          <v-btn color="green darken-1" text @click="dialog = false">
+            Agree
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
 <script>
+import fileUpload from '../components/FileUpload'
+
 export default {
+  components: {
+    fileUpload,
+  },
   data() {
     return {
       clipped: false,
       drawer: false,
       fixed: false,
+      dialog: false,
       items: [
         {
           icon: 'mdi-apps',
@@ -71,5 +104,6 @@ export default {
       title: 'API Status Presenter',
     }
   },
+  methods: {},
 }
 </script>
